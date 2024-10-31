@@ -9,6 +9,9 @@ def get_token(host, username, password):
 
 def main(page: Page):
     token = get_token('https://cursad.jovenclub.cu', 'eljoker63','33805157Jkr63*')
-    page.add(SafeArea(Text(f"Hello, Flet!\n{token}")))
+    text = SafeArea(Text(f"Hello, Flet!\n{token}"))
+    img = Image(src="/icons/token.png")
+    page.add(text)
+    
 
 app(target=main, assets_dir="assets")
