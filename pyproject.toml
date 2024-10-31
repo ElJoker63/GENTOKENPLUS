@@ -1,0 +1,8 @@
+[project]
+name = "GENTOKEN+"
+version = "3.0.1"
+description = "My first Flet project"
+authors = [
+  {name = "ElJoker63", email = "eljoker.cuba@gmail.com"}
+]
+dependencies = ["flet==0.24.1"]
