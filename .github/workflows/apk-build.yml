@@ -17,7 +17,7 @@ on:
 
 env:
   # https://flet.dev/docs/publish#versioning
-  BUILD_NUMBER: 202411311
+  BUILD_NUMBER: 202411011
   BUILD_VERSION: 3.0.1
   PYTHON_VERSION: 3.12.2
   FLUTTER_VERSION: 3.24.4
@@ -106,5 +106,17 @@ jobs:
         to: ${{ secrets.TELEGRAM }}
         token: ${{ secrets.BOT }}
         message: |
-          Nueva actualizacion ${{ env.APP_NAME}} v${{ env.BUILD_VERSION }}
+          Nueva actualizacion ${{ env.APP_NAME}}
+          *Versión:* ${{ env.BUILD_VERSION }}
+          *Revisión:* ${{ env.BUILD_NUMBER }}
+          
+          🐧 En esta nueva version:
+          - Se ha cambiado completamente la tecnologia de la app.
+          - Se ha eliminado la necesidad de una API para poder realizar las solicitudes.
+          - Se ha creado y optimizado la app para mayor compatibilidad.
+          - Se ha convertido la app en multiplataforma.
+          
           [DESCARGAR](https://github.com/${{ github.repository }}/releases/download/v${{ env.BUILD_VERSION }}/app-release.apk)
+        photo: assets/icon.png
+        format: markdown
+        disable_web_page_preview: true

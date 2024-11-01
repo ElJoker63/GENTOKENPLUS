@@ -2,7 +2,7 @@ from flet import *
 import requests
 import json
 
-version = '3.0.0'
+version = '3.0.1'
 DEV = 'ElJoker63'
 
 # Define a link style dict.
@@ -162,8 +162,7 @@ class MainPage(UserControl):
         self.progress_ring.visible = True
         self.button.update()
 
-        token = await self.page.run_async(
-            get_token,
+        token = get_token(
             self.host.value,
             self.username.value,
             self.password.value
