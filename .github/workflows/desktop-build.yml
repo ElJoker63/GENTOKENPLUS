@@ -171,7 +171,7 @@ jobs:
     - name: Upload APK Artifact
       uses: actions/upload-artifact@v4.3.4
       with:
-        name: apk-build-artifact
+        name: apk-artifact
         path: build/apk
         if-no-files-found: error 
         overwrite: true
@@ -221,11 +221,12 @@ jobs:
             artifacts/linux.zip
             artifacts/macos.zip
             artifacts/windows.zip
-            flet-android/app-release.apk
+            apk-artifacts/app-release.apk
 
           tag_name: v${{ env.BUILD_VERSION }}
         env:
           GITHUB_TOKEN: ${{ secrets.TOKEN }}
+      
       - name: send message to channel
         uses: appleboy/telegram-action@master
         with:
