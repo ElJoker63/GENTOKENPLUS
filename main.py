@@ -2,7 +2,7 @@ from flet import *
 import requests
 import json
 
-version = '3.0.1'
+version = '3.0.2'
 DEV = 'ElJoker63'
 
 # Define a link style dict.

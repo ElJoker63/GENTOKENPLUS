@@ -17,7 +17,7 @@ on:
 
 env:
   BUILD_NUMBER: 202411011
-  BUILD_VERSION: 3.0.1
+  BUILD_VERSION: 3.0.2
   PYTHON_VERSION: 3.12.2
   FLUTTER_VERSION: 3.24.4
   APP_NAME: "GENTOKEN+"
@@ -198,7 +198,20 @@ jobs:
         with:
           tag_name: v${{ env.BUILD_VERSION }}
           release_name: Release v${{ env.BUILD_VERSION }}
-          body: 🚀 Update ${{ env.BUILD_VERSION }}
+          body: |
+            🚀 #Nueva actualizacion ${{ env.BUILD_VERSION }}
+            **Versión:** v${{ env.BUILD_VERSION }}
+            **Revisión:** ${{ env.BUILD_NUMBER }}
+
+            **🐧 En esta nueva version:**
+              - Se ha cambiado completamente la tecnologia de la app.
+              - Se ha eliminado la necesidad de una API para poder realizar las solicitudes.
+              - Se ha creado y optimizado la app para mayor compatibilidad.
+              - Se ha convertido la app en multiplataforma.
+            [💻WINDOWS](https://github.com/${{ github.repository }}/releases/download/v${{ env.BUILD_VERSION }}/windows.zip)
+            [🐧LINUX](https://github.com/${{ github.repository }}/releases/download/v${{ env.BUILD_VERSION }}/linux.zip)
+            [🍏MACOS](https://github.com/${{ github.repository }}/releases/download/v${{ env.BUILD_VERSION }}/macos.zip)
+            [🤖ANDROID](https://github.com/${{ github.repository }}/releases/download/v${{ env.BUILD_VERSION }}/app-release.apk)
           draft: false
           prerelease: false
 
