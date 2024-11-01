@@ -223,7 +223,7 @@ jobs:
             artifacts/flet-windows.zip
             ./build/apk/app-release.apk
 
-          tag_name: ${{ env.APP_NAME }} v${{ env.BUILD_VERSION }}
+          tag_name: v${{ env.BUILD_VERSION }}
         env:
           GITHUB_TOKEN: ${{ secrets.TOKEN }}
       - name: send message to channel
