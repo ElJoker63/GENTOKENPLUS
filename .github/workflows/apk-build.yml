@@ -83,20 +83,6 @@ jobs:
         release_name: ${{ env.APP_NAME}} v${{ env.BUILD_VERSION }}
         body: |
           ##  Update ${{ env.BUILD_VERSION }}
-          **GenToken+** _(Token Generator Moodle)_
-          **Versión:** ${{ env.BUILD_VERSION }}
-          **Revisión:** ${{ env.BUILD_NUMBER }}
-
-          En esta nueva version:
-          - Se ha cambiado completamente la tecnologia de la app.
-          - Se ha eliminado la necesidad de una API para poder realizar las solicitudes.
-          - Se ha creado y optimizado la app para mayor compatibilidad.
-          - Se ha convertido la app en multiplataforma.
-
-          _Aplicación para obtener los token de los moodles._
-
-          ————————————————
-          [Canal Oficial](https://t.me/gentokenplus)
         draft: false
         prerelease: false
 
