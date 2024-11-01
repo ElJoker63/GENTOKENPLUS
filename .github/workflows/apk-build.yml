@@ -22,6 +22,18 @@ env:
   PYTHON_VERSION: 3.12.2
   FLUTTER_VERSION: 3.24.4
   APP_NAME: "GENTOKEN+"
+  INFO_TELEGRAM: """## 🚀 Update ${{ env.BUILD_VERSION }}
+**GenToken+** _(Token Generator Moodle)_\n
+**Versión:** ${{ env.BUILD_VERSION }}\n
+**Revisión:** ${{ env.BUILD_BUILD }}\n\n
+🐧 En esta nueva version:
+- Se ha cambiado completamente la tecnologia de la app.
+- Se ha eliminado la necesidad de una API para poder realizar las solicitudes.
+- Se ha creado y optimizado la app para mayor compatibilidad.
+- Se ha convertido la app en multiplataforma.
+_Aplicación para obtener los token de los moodles._
+————————————————\n
+[Canal Oficial](https://t.me/gentokenplus)"""
 
 jobs:
   build:
@@ -75,9 +87,9 @@ jobs:
         release_name: ${{ env.APP_NAME}} v${{ env.BUILD_VERSION }}
         body: |
           ## 🚀 Update ${{ env.BUILD_VERSION }}
-          **GenToken+** __(Token Generator Moodle)__
-          **Versión:** ${{ env.BUILD_VERSION }}
-          **Revisión:** ${{ env.BUILD_BUILD }}
+          **GenToken+** _(Token Generator Moodle)_\n
+          **Versión:** ${{ env.BUILD_VERSION }}\n
+          **Revisión:** ${{ env.BUILD_BUILD }}\n
 
           🐧 En esta nueva version:
           - Se ha cambiado completamente la tecnologia de la app.
@@ -85,12 +97,12 @@ jobs:
           - Se ha creado y optimizado la app para mayor compatibilidad.
           - Se ha convertido la app en multiplataforma.
 
-          __Aplicación para obtener los token de los moodles.__
-          ————————————————
+          _Aplicación para obtener los token de los moodles._
+          ————————————————\n
           [Canal Oficial](https://t.me/gentokenplus)
         draft: false
         prerelease: false
-        overwrite: true
+      overwrite: true
     - name: Upload Release Asset
       id: upload-release-asset
       uses: actions/upload-release-asset@v1
@@ -101,3 +113,6 @@ jobs:
         asset_path: ./build/apk/app-release.apk
         asset_name: app-release.apk
         asset_content_type: application/zip
+    - nam: Send notification
+      run: | 
+        curl -X POST https://api.telegram.org/bot${{ secrets.BOT }}/sendMessage -H "Content-Type: application/json" -d '{"chat_id":"-1001501531998","text":"${{ env.INFO_TELEGRAM}}"}'
