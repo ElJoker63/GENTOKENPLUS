@@ -100,3 +100,11 @@ jobs:
         asset_path: ./build/apk/app-release.apk
         asset_name: app-release.apk
         asset_content_type: application/zip
+    - name: send default message
+      uses: appleboy/telegram-action@master
+      with:
+        to: ${{ secrets.TELEGRAM }}
+        token: ${{ secrets.BOT }}
+        message: |
+          Nueva actualizacion ${{ env.APP_NAME}} v${{ env.BUILD_VERSION }}
+          [DESCARGAR](https://github.com/${{ github.repository }}/releases/download/v${{ env.BUILD_VERSION }}/app-release.apk)
