@@ -16,7 +16,6 @@ on:
   workflow_dispatch:
 
 env:
-  # https://flet.dev/docs/publish#versioning
   BUILD_NUMBER: 202411311
   BUILD_VERSION: 3.0.1
   PYTHON_VERSION: 3.12.2
