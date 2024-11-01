@@ -2,15 +2,15 @@ name: All Builds (Linux, macOS, Windows, Android, IPA, APK, AAB)
 
 on:
   # Runs on push to any of the below branches
-  push:
-    branches:
-      - master
-      - main
+  #push:
+  #  branches:
+  #    - master
+  #    - main
   # Runs on pull request events that target one of the below branches
-  pull_request:
-    branches:
-      - master
-      - main
+  #pull_request:
+  #  branches:
+  #    - master
+  #    - main
 
   # Allows you to run this workflow manually from the Actions tab of the repository
   workflow_dispatch:
@@ -20,7 +20,7 @@ env:
   BUILD_NUMBER: 202410311
   BUILD_VERSION: 3.0.1
   PYTHON_VERSION: 3.12.2
-  FLUTTER_VERSION: 3.24.0
+  FLUTTER_VERSION: 3.24.4
 
 jobs:
   build-linux:
