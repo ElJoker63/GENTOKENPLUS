@@ -196,7 +196,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.TOKEN }} #GitHub Token
         with:
-          tag_name: ${{ env.APP_NAME }} v${{ env.BUILD_VERSION }}
+          tag_name: v${{ env.BUILD_VERSION }}
           release_name: Release v${{ env.BUILD_VERSION }}
           body: 🚀 Update ${{ env.BUILD_VERSION }}
           draft: false
