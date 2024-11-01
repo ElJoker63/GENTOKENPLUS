@@ -20,6 +20,7 @@ env:
   BUILD_VERSION: 3.0.1
   PYTHON_VERSION: 3.12.2
   FLUTTER_VERSION: 3.24.4
+  APP_NAME: "GENTOKEN+"
 
 jobs:
   build-linux:
