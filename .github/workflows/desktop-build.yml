@@ -2,10 +2,10 @@ name: Desktop Build (Linux, macOS, Windows)
 
 on:
   # Runs on push to any of the below branches
-  push:
-    branches:
-      - master
-      - main
+  #push:
+  #  branches:
+  #    - master
+  #    - main
   # Runs on pull request events that target one of the below branches
   #pull_request:
   #  branches:
@@ -204,10 +204,10 @@ jobs:
             **Revisión:** ${{ env.BUILD_NUMBER }}
 
             **🐧 En esta nueva version:**
-              - Se ha cambiado completamente la tecnologia de la app.
-              - Se ha eliminado la necesidad de una API para poder realizar las solicitudes.
-              - Se ha creado y optimizado la app para mayor compatibilidad.
-              - Se ha convertido la app en multiplataforma.
+                - Se ha cambiado completamente la tecnologia de la app.
+                - Se ha eliminado la necesidad de una API para poder realizar las solicitudes.
+                - Se ha creado y optimizado la app para mayor compatibilidad.
+                - Se ha convertido la app en multiplataforma.
             [💻WINDOWS](https://github.com/${{ github.repository }}/releases/download/v${{ env.BUILD_VERSION }}/windows.zip)
             [🐧LINUX](https://github.com/${{ github.repository }}/releases/download/v${{ env.BUILD_VERSION }}/linux.zip)
             [🍏MACOS](https://github.com/${{ github.repository }}/releases/download/v${{ env.BUILD_VERSION }}/macos.zip)
