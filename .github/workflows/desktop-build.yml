@@ -16,7 +16,7 @@ on:
   workflow_dispatch:
 
 env:
-  BUILD_NUMBER: 202411311
+  BUILD_NUMBER: 202411011
   BUILD_VERSION: 3.0.1
   PYTHON_VERSION: 3.12.2
   FLUTTER_VERSION: 3.24.4
@@ -54,7 +54,7 @@ jobs:
       - name: Flet Build Linux
         run: |
           flutter config --no-analytics 
-          flet build linux --verbose --no-rich-output --project flet --product flet --copyright "Copyright (c) 2024 flet" --build-version=$env:BUILD_VERSION
+          flet build linux --no-rich-output --product ${{ env.APP_NAME }} --org "com.aewaredev" --build-number "${{ env.BUILD_NUMBER }}" --build-version "${{ env.BUILD_VERSION }}" --verbose
 
       - name: Upload Linux Artifact
         uses: actions/upload-artifact@v4.3.4
@@ -89,7 +89,7 @@ jobs:
       - name: Flet Build macOS
         run: |
           flutter config --no-analytics
-          flet build macos --verbose --no-rich-output --project flet --product flet --copyright "Copyright (c) 2024 flet" --build-version=$env:BUILD_VERSION
+          flet build macos --no-rich-output --product ${{ env.APP_NAME }} --org "com.aewaredev" --build-number "${{ env.BUILD_NUMBER }}" --build-version "${{ env.BUILD_VERSION }}" --verbose
 
       - name: Upload macOS Artifact
         uses: actions/upload-artifact@v4.3.4
@@ -124,7 +124,7 @@ jobs:
       - name: Flet Build Windows
         run: |
           flutter config --no-analytics
-          flet build windows --verbose --no-rich-output --project flet --product flet --copyright "Copyright (c) 2024 flet" --build-number=$env:BUILD_NUMBER --build-version=$env:BUILD_VERSION
+          flet build windows --no-rich-output --product ${{ env.APP_NAME }} --org "com.aewaredev" --build-number "${{ env.BUILD_NUMBER }}" --build-version "${{ env.BUILD_VERSION }}" --verbose
 
       - name: Upload Windows Artifact
         uses: actions/upload-artifact@v4.3.4
@@ -134,8 +134,49 @@ jobs:
           if-no-files-found: warn
           overwrite: false
 
+  build-android:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Python ${{ env.PYTHON_VERSION }}
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+
+    - name: Install Python Dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Setup Flutter ${{ env.FLUTTER_VERSION }}
+      uses: subosito/flutter-action@v2
+      with:
+        flutter-version: ${{ env.FLUTTER_VERSION }}
+
+    - name: Setup Java JDK
+      uses: actions/setup-java@v4.2.1
+      with:
+        distribution: 'temurin' # See https://github.com/marketplace/actions/setup-java-jdk#supported-distributions for available options
+        java-version: '21'
+
+    - name: Flet Build APK ${{ env.APP_NAME }}
+      run: |
+        flutter config --no-analytics
+        flet build apk --product ${{ env.APP_NAME }} --org "com.aewaredev" --build-number "${{ env.BUILD_NUMBER }}" --build-version "${{ env.BUILD_VERSION }}" --verbose
+
+    - name: Upload APK Artifact
+      uses: actions/upload-artifact@v4.3.4
+      with:
+        name: apk-build-artifact
+        path: build/apk
+        if-no-files-found: error 
+        overwrite: true
+
   create-release:
-    needs: [build-linux, build-macos, build-windows]
+    needs: [build-linux, build-macos, build-windows, build-android]
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -156,24 +197,8 @@ jobs:
         with:
           tag_name: v${{ env.BUILD_VERSION }}
           release_name: Release v${{ env.BUILD_VERSION }}
-          body: |
-            ## 🚀 Funciones
-            [x] Todavía en BETA
-            ------
-            ## 📑Próximamente
-            - [ ] Posibilidad de almacenar los token generados
-            - [ ] Version para iOS.
-            - [ ] Mejoras en la interfaz de usuario.
-            - [ ] Notificacion de actualizaciones.
-            ------
-            ## 🐛Se corrigieron los siguientes bugs.
-            - [x] Se ha cambiado completamente la tecnologia de la app.
-            - [x] Se ha eliminado la necesidad de una API para poder realizar las solicitudes.
-            - [x] Se ha creado y optimizado la app para mayor compatibilidad.
-            - [x] Se ha convertido la app en multiplataforma.
-
-            > [!IMPORTANT]
-            > Tienen que sacar de la carpeta _internal la carpeta assets hacia la ruta principal del launcher para que salgan todos los recursos.
+          body: | 
+            ## 🚀 Update ${{ env.BUILD_VERSION }}
           draft: false
           prerelease: false
 
@@ -196,6 +221,8 @@ jobs:
             artifacts/flet-linux.zip
             artifacts/flet-macos.zip
             artifacts/flet-windows.zip
+            artifacts/app-release.apk
+
           tag_name: v${{ env.BUILD_VERSION }}
         env:
           GITHUB_TOKEN: ${{ secrets.TOKEN }} #GitHub Token

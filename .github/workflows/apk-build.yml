@@ -2,15 +2,15 @@ name: APK Build
 
 on:
   # Runs on push to any of the below branches
-  push:
-    branches:
-      - master
-      - main
+  #push:
+  #  branches:
+  #    - master
+  #    - main
   # Runs on pull request events that target one of the below branches
-  pull_request:
-    branches:
-      - master
-      - main
+  #pull_request:
+  #  branches:
+  #    - master
+  #    - main
 
   # Allows you to run this workflow manually from the Actions tab of the repository
   workflow_dispatch:
@@ -100,7 +100,7 @@ jobs:
         asset_path: ./build/apk/app-release.apk
         asset_name: app-release.apk
         asset_content_type: application/zip
-    - name: send default message
+    - name: send message to channel
       uses: appleboy/telegram-action@master
       with:
         to: ${{ secrets.TELEGRAM }}
@@ -117,6 +117,5 @@ jobs:
           - Se ha convertido la app en multiplataforma.
           
           [DESCARGAR](https://github.com/${{ github.repository }}/releases/download/v${{ env.BUILD_VERSION }}/app-release.apk)
-        photo: assets/icon.png
         format: markdown
         disable_web_page_preview: true
