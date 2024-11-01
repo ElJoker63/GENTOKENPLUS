@@ -2,10 +2,10 @@ name: Desktop Build (Linux, macOS, Windows)
 
 on:
   # Runs on push to any of the below branches
-  #push:
-  #  branches:
-  #    - master
-  #    - main
+  push:
+    branches:
+      - master
+      - main
   # Runs on pull request events that target one of the below branches
   #pull_request:
   #  branches:
@@ -54,7 +54,7 @@ jobs:
       - name: Flet Build Linux
         run: |
           flutter config --no-analytics 
-          flet build linux --no-rich-output --product ${{ env.APP_NAME }} --org "com.aewaredev" --build-number "${{ env.BUILD_NUMBER }}" --build-version "${{ env.BUILD_VERSION }}" --verbose
+          flet build linux --no-rich-output --product "${{ env.APP_NAME }}" --org "com.aewaredev" --build-number "${{ env.BUILD_NUMBER }}" --build-version "${{ env.BUILD_VERSION }}" --verbose
 
       - name: Upload Linux Artifact
         uses: actions/upload-artifact@v4.3.4
@@ -89,7 +89,7 @@ jobs:
       - name: Flet Build macOS
         run: |
           flutter config --no-analytics
-          flet build macos --no-rich-output --product ${{ env.APP_NAME }} --org "com.aewaredev" --build-number "${{ env.BUILD_NUMBER }}" --build-version "${{ env.BUILD_VERSION }}" --verbose
+          flet build macos --no-rich-output --product "${{ env.APP_NAME }}" --org "com.aewaredev" --build-number "${{ env.BUILD_NUMBER }}" --build-version "${{ env.BUILD_VERSION }}" --verbose
 
       - name: Upload macOS Artifact
         uses: actions/upload-artifact@v4.3.4
@@ -124,7 +124,7 @@ jobs:
       - name: Flet Build Windows
         run: |
           flutter config --no-analytics
-          flet build windows --no-rich-output --product ${{ env.APP_NAME }} --org "com.aewaredev" --build-number "${{ env.BUILD_NUMBER }}" --build-version "${{ env.BUILD_VERSION }}" --verbose
+          flet build windows --no-rich-output --product "${{ env.APP_NAME }}" --org "com.aewaredev" --build-number "${{ env.BUILD_NUMBER }}" --build-version "${{ env.BUILD_VERSION }}" --verbose
 
       - name: Upload Windows Artifact
         uses: actions/upload-artifact@v4.3.4
@@ -165,7 +165,7 @@ jobs:
     - name: Flet Build APK ${{ env.APP_NAME }}
       run: |
         flutter config --no-analytics
-        flet build apk --product ${{ env.APP_NAME }} --org "com.aewaredev" --build-number "${{ env.BUILD_NUMBER }}" --build-version "${{ env.BUILD_VERSION }}" --verbose
+        flet build apk --product "${{ env.APP_NAME }}" --org "com.aewaredev" --build-number "${{ env.BUILD_NUMBER }}" --build-version "${{ env.BUILD_VERSION }}" --verbose
 
     - name: Upload APK Artifact
       uses: actions/upload-artifact@v4.3.4
