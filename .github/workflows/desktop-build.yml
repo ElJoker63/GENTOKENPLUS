@@ -214,6 +214,11 @@ jobs:
           echo "Artifacts Directory After Zipping:"
           ls -la artifacts/
 
+      - name: List apk-artifactv
+        run: |
+          echo "List apk-artifactv:"
+          ls -la artifacts/apk-artifact
+
       - name: Upload Release Assets
         uses: softprops/action-gh-release@v1
         with:
