@@ -226,7 +226,7 @@ jobs:
             artifacts/linux.zip
             artifacts/macos.zip
             artifacts/windows.zip
-            apk-artifact/app-release.apk
+            artifacts/apk-artifact/app-release.apk
 
           tag_name: v${{ env.BUILD_VERSION }}
         env:
