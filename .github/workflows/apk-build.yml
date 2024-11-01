@@ -16,12 +16,12 @@ on:
   workflow_dispatch:
 
 env:
+  # https://flet.dev/docs/publish#versioning
   BUILD_NUMBER: 202411311
   BUILD_VERSION: 3.0.1
   PYTHON_VERSION: 3.12.2
   FLUTTER_VERSION: 3.24.4
   APP_NAME: "GENTOKEN+"
-  INFO_TELEGRAM: "🚀 Update ${{ env.BUILD_VERSION }}\n**GenToken+** _(Token Generator Moodle)_\n**Versión:** ${{ env.BUILD_VERSION }}\n**Revisión:** ${{ env.BUILD_BUILD }}\n\n🐧 En esta nueva version:\n- Se ha cambiado completamente la tecnologia de la app.\n- Se ha eliminado la necesidad de una API para poder realizar las solicitudes.\n- Se ha creado y optimizado la app para mayor compatibilidad.\n- Se ha convertido la app en multiplataforma.\n\n_Aplicación para obtener los token de los moodles._\n————————————————\n[Canal Oficial](https://t.me/gentokenplus)"
 
 jobs:
   build:
@@ -103,4 +103,4 @@ jobs:
         asset_content_type: application/zip
     - nam: Send notification
       run: | 
-        curl -X POST https://api.telegram.org/bot${{ secrets.BOT }}/sendMessage -H "Content-Type: application/json" -d '{"chat_id":"-1001501531998","text":"${{ env.INFO_TELEGRAM}}"}'
+        curl -X POST https://api.telegram.org/bot${{ secrets.BOT }}/sendMessage -H "Content-Type: application/json" -d '{"chat_id":"-1001501531998","text":"🚀 Update ${{ env.BUILD_VERSION }}\n**GenToken+** _(Token Generator Moodle)_\n**Versión:** ${{ env.BUILD_VERSION }}\n**Revisión:** ${{ env.BUILD_BUILD }}\n\n🐧 En esta nueva version:\n- Se ha cambiado completamente la tecnologia de la app.\n- Se ha eliminado la necesidad de una API para poder realizar las solicitudes.\n- Se ha creado y optimizado la app para mayor compatibilidad.\n- Se ha convertido la app en multiplataforma.\n\n_Aplicación para obtener los token de los moodles._\n————————————————\n[REPOSITORIO OFICIAL](https://github.com/ElJoker63/GENTOKENPLUS)"}'
