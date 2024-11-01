@@ -1,17 +1,22 @@
 name: APK Build
 
 on:
+  # Runs on push to any of the below branches
   push:
     branches:
       - master
       - main
+  # Runs on pull request events that target one of the below branches
   pull_request:
     branches:
       - master
       - main
+
+  # Allows you to run this workflow manually from the Actions tab of the repository
   workflow_dispatch:
 
 env:
+  # https://flet.dev/docs/publish#versioning
   BUILD_NUMBER: 202411311
   BUILD_VERSION: 3.0.1
   PYTHON_VERSION: 3.12.2
@@ -44,21 +49,8 @@ jobs:
     - name: Setup Java JDK
       uses: actions/setup-java@v4.2.1
       with:
-        distribution: 'temurin'
+        distribution: 'temurin' # See https://github.com/marketplace/actions/setup-java-jdk#supported-distributions for available options
         java-version: '21'
-
-    - name: Delete Existing Release
-      if: success()
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: |
-        release_id=$(curl -H "Authorization: token $GITHUB_TOKEN" \
-        https://api.github.com/repos/${{ github.repository }}/releases/tags/v${{ env.BUILD_VERSION }} \
-        | jq -r '.id')
-        if [ "$release_id" != "null" ]; then
-          curl -X DELETE -H "Authorization: token $GITHUB_TOKEN" \
-          https://api.github.com/repos/${{ github.repository }}/releases/$release_id
-        fi
 
     - name: Flet Build APK ${{ env.APP_NAME }}
       run: |
@@ -66,12 +58,12 @@ jobs:
         flet build apk --product ${{ env.APP_NAME }} --org "com.aewaredev" --build-number "${{ env.BUILD_NUMBER }}" --build-version "${{ env.BUILD_VERSION }}" --verbose
 
     - name: Upload APK Artifact
-      uses: actions/upload-artifact@v4.3.4
+      uses: actions/upload-artifact@v4.3.4  # https://github.com/marketplace/actions/upload-a-build-artifact
       with:
-        name: apk-build-artifact
-        path: build/apk
-        if-no-files-found: error
-        overwrite: true
+        name: apk-build-artifact  # the name of the artifact
+        path: build/apk  # location of Flet build output
+        if-no-files-found: error  # Fail the action with an error message if no files are found
+        overwrite: true  # If true, an artifact with a matching name will be deleted before a new one is uploaded. If false, the action will fail if an artifact for the given name already exists. Does not fail if the artifact does not exist.
 
     - name: Create Release
       id: create_release
@@ -79,13 +71,12 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.TOKEN }}
       with:
-        tag_name: v${{ env.BUILD_VERSION }} - ${{ env.BUILD_NUMBER }}
+        tag_name: v${{ env.BUILD_VERSION }}
         release_name: ${{ env.APP_NAME}} v${{ env.BUILD_VERSION }}
         body: |
-          ##  Update ${{ env.BUILD_VERSION }}
+          ## 🚀 Update ${{ env.BUILD_VERSION }}
         draft: false
         prerelease: false
-
     - name: Upload Release Asset
       id: upload-release-asset
       uses: actions/upload-release-asset@v1
@@ -96,7 +87,3 @@ jobs:
         asset_path: ./build/apk/app-release.apk
         asset_name: app-release.apk
         asset_content_type: application/zip
-
-    - name: Send notification
-      run: |
-        curl -X POST https://api.telegram.org/bot${{ secrets.BOT }}/sendMessage -H "Content-Type: application/json" -d "{\"chat_id\":\"-1001501531998\",\"text\":\" Update v${{ env.BUILD_VERSION }}\n**GenToken+** _\\Token Generator Moodle_\n**Versión:** v${{ env.BUILD_VERSION }}\n**Revisión:** ${{ env.BUILD_NUMBER }}\n\n En esta nueva versión:\n- Se ha cambiado completamente la tecnología de la app.\n- Se ha eliminado la necesidad de una API para poder realizar las solicitudes.\n- Se ha creado y optimizado la app para mayor compatibilidad.\n- Se ha convertido la app en multiplataforma.\n\n_Aplicación para obtener los tokens de los moodles._\n\n[REPOSITORIO OFICIAL](https://github.com/ElJoker63/GENTOKENPLUS/releases/latest)\",\"parse_mode\":\"Markdown\",\"disable_web_page_preview\":true}"
