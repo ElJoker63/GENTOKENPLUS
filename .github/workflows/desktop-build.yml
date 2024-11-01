@@ -198,8 +198,7 @@ jobs:
         with:
           tag_name: ${{ env.APP_NAME }} v${{ env.BUILD_VERSION }}
           release_name: Release v${{ env.BUILD_VERSION }}
-          body: | 
-            ## 🚀 Update ${{ env.BUILD_VERSION }}
+          body: 🚀 Update ${{ env.BUILD_VERSION }}
           draft: false
           prerelease: false
 
@@ -222,8 +221,30 @@ jobs:
             artifacts/flet-linux.zip
             artifacts/flet-macos.zip
             artifacts/flet-windows.zip
-            artifacts/app-release.apk
+            ./build/apk/app-release.apk
 
           tag_name: ${{ env.APP_NAME }} v${{ env.BUILD_VERSION }}
         env:
-          GITHUB_TOKEN: ${{ secrets.TOKEN }} #GitHub Token
+          GITHUB_TOKEN: ${{ secrets.TOKEN }}
+      - name: send message to channel
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM }}
+          token: ${{ secrets.BOT }}
+          message: |
+            Nueva actualizacion ${{ env.APP_NAME}}
+            *Versión:* ${{ env.BUILD_VERSION }}
+            *Revisión:* ${{ env.BUILD_NUMBER }}
+            
+            🐧 En esta nueva version:
+            - Se ha cambiado completamente la tecnologia de la app.
+            - Se ha eliminado la necesidad de una API para poder realizar las solicitudes.
+            - Se ha creado y optimizado la app para mayor compatibilidad.
+            - Se ha convertido la app en multiplataforma.
+            
+            [💻WINDOWS](https://github.com/${{ github.repository }}/releases/download/v${{ env.BUILD_VERSION }}/app-release.apk)
+            [🐧LINUX](https://github.com/${{ github.repository }}/releases/download/v${{ env.BUILD_VERSION }}/app-release.apk)
+            [🍏MACOS](https://github.com/${{ github.repository }}/releases/download/v${{ env.BUILD_VERSION }}/app-release.apk)
+            [🤖ANDROID](https://github.com/${{ github.repository }}/releases/download/v${{ env.BUILD_VERSION }}/app-release.apk)
+          format: markdown
+          disable_web_page_preview: true
