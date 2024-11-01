@@ -221,7 +221,7 @@ jobs:
             artifacts/linux.zip
             artifacts/macos.zip
             artifacts/windows.zip
-            apk-artifacts/app-release.apk
+            apk-artifact/app-release.apk
 
           tag_name: v${{ env.BUILD_VERSION }}
         env:
@@ -249,3 +249,4 @@ jobs:
             [🤖ANDROID](https://github.com/${{ github.repository }}/releases/download/v${{ env.BUILD_VERSION }}/app-release.apk)
           format: markdown
           disable_web_page_preview: true
+          
