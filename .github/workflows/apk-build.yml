@@ -21,18 +21,7 @@ env:
   PYTHON_VERSION: 3.12.2
   FLUTTER_VERSION: 3.24.4
   APP_NAME: "GENTOKEN+"
-  INFO_TELEGRAM: """## 🚀 Update ${{ env.BUILD_VERSION }}
-**GenToken+** _(Token Generator Moodle)_\n
-**Versión:** ${{ env.BUILD_VERSION }}\n
-**Revisión:** ${{ env.BUILD_BUILD }}\n\n
-🐧 En esta nueva version:
-- Se ha cambiado completamente la tecnologia de la app.
-- Se ha eliminado la necesidad de una API para poder realizar las solicitudes.
-- Se ha creado y optimizado la app para mayor compatibilidad.
-- Se ha convertido la app en multiplataforma.
-_Aplicación para obtener los token de los moodles._
-————————————————\n
-[Canal Oficial](https://t.me/gentokenplus)"""
+  INFO_TELEGRAM: "🚀 Update ${{ env.BUILD_VERSION }}\n**GenToken+** _(Token Generator Moodle)_\n**Versión:** ${{ env.BUILD_VERSION }}\n**Revisión:** ${{ env.BUILD_BUILD }}\n\n🐧 En esta nueva version:\n- Se ha cambiado completamente la tecnologia de la app.\n- Se ha eliminado la necesidad de una API para poder realizar las solicitudes.\n- Se ha creado y optimizado la app para mayor compatibilidad.\n- Se ha convertido la app en multiplataforma.\n\n_Aplicación para obtener los token de los moodles._\n————————————————\n[Canal Oficial](https://t.me/gentokenplus)"
 
 jobs:
   build:
